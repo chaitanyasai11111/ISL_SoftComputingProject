@@ -1,0 +1,9 @@
+# Ignore datasets and generated arrays
+Indian/
+*.npy
+*.h5
+*.joblib
+
+# Ignore python cache
+__pycache__/
+*.pyc
