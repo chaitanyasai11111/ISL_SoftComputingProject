@@ -19,6 +19,45 @@ The system pipeline consists of four main phases:
 Classical geometric features (like Hu Moments) evaluate the *entire* contour of an object. While they achieve extremely high accuracy on tightly cropped laboratory datasets, they are highly sensitive to real-world webcam environments (where wrists, forearms, and background shadows alter the mathematical geometry). This project successfully proves the efficacy of the proposed Soft Computing algorithms in a controlled environment, highlighting the exact mathematical reasons why the industry shifted to CNNs for real-time vision.
 
 ---
+Install the required dependencies:
+
+Bash
+pip install opencv-python numpy scikit-learn tensorflow scikit-fuzzy matplotlib seaborn joblib
+Add the Dataset:
+Because of GitHub's file size limits, the raw image dataset is not included in this repository.
+
+Create a folder named Indian in the root directory.
+
+Place the ISL dataset images inside this folder (organized into subfolders A-Z and 1-9).
+
+🚀 How to Run the Pipeline
+Run the scripts in the following exact order to replicate the results:
+
+Phase 1: Data Preparation & Feature Extraction
+Reads the raw images, extracts the 9 mathematical features, splits the data (70% Train / 15% Val / 15% Test), and saves them as lightweight .npy arrays.
+
+Bash
+python phase1_prep.py
+Phase 2: Neural Network Training
+Standardizes the features and trains the 128-64-32 MLP on the training set, tuning it via the validation set. Saves the scaler and model weights.
+
+Bash
+python phase2_mlp_training.py
+Phase 3: Fuzzy Supervisor Module
+This script contains the FuzzySupervisor class (imported in Phase 4). You can run it standalone to generate the Membership Function graphs for your report.
+
+Bash
+python phase3_fuzzy_supervisor.py
+Phase 4: Hybrid System Evaluation
+Evaluates the unseen 15% Test Dataset through the entire hybrid pipeline (ANN + Fuzzy Logic). Outputs final hybrid accuracy and generates the overall Confusion Matrix.
+
+Bash
+python phase4_hybrid_evaluation.py
+Optional: Generate Result Images
+Picks random test images, classifies them through the hybrid pipeline, and overlays the true label, prediction, confidence, and Fuzzy logic overrides directly onto the image. Saved in the results/ folder.
+
+Bash
+python generate_result_images.py
 
 ## ⚙️ Installation & Setup
 
